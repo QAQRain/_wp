@@ -1,1 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陳冠倫 Rain - 個人履歷</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --text: #334155;
+        }
 
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .resume-card {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+
+        /* 左側欄 */
+        .sidebar {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 30px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            background: #475569;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            border: 4px solid var(--primary);
+        }
+
+        .sidebar h1 { margin: 10px 0 5px; font-size: 24px; text-align: center; }
+        .sidebar .english-name { text-align: center; opacity: 0.8; margin-bottom: 30px; display: block; }
+
+        .info-item { margin-bottom: 20px; font-size: 0.9rem; }
+        .info-item i { width: 25px; color: var(--primary); }
+
+        /* 右側主內容 */
+        .main-content { padding: 40px; }
+        
+        section { margin-bottom: 35px; }
+        h2 { 
+            color: var(--dark); 
+            border-bottom: 2px solid var(--primary); 
+            padding-bottom: 8px; 
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+        h2 i { margin-right: 10px; color: var(--primary); }
+
+        .grid-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { 
+            background: #e2e8f0; 
+            color: #475569; 
+            padding: 5px 12px; 
+            border-radius: 15px; 
+            font-size: 0.85rem; 
+            font-weight: 600;
+        }
+
+        .edu-item { margin-bottom: 15px; }
+        .edu-title { font-weight: bold; color: var(--dark); }
+        .edu-sub { font-size: 0.9rem; color: #64748b; }
+
+        @media (max-width: 768px) {
+            .resume-card { grid-template-columns: 1fr; }
+            .sidebar { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="resume-card">
+    <aside class="sidebar">
+        <div class="profile-img">
+            <i class="fas fa-user-ninja"></i>
+        </div>
+        <h1>陳冠倫</h1>
+        <span class="english-name">Guan-Lun, Chen (Rain)</span>
+
+        <div style="margin-top: 40px;">
+            <div class="info-item"><i class="fas fa-calendar"></i> 2005 / 12 / 12</div>
+            <div class="info-item"><i class="fas fa-phone"></i> 0906-512-308</div>
+            <div class="info-item"><i class="fas fa-envelope"></i> (通訊) 02-86483585</div>
+            <div class="info-item"><i class="fas fa-map-marker-alt"></i> 新北市汐止區</div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <h3 style="font-size: 1rem; border-bottom: 1px solid #475569; padding-bottom: 5px;">應徵意向</h3>
+            <p style="font-size: 0.9rem; opacity: 0.9;">華鼎電通股份有限公司</p>
+            <p style="font-size: 0.8rem; opacity: 0.7;">期望：月薪符合需求、準時上下班</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <section>
+            <h2><i class="fas fa-graduation-cap"></i> 學歷資料</h2>
+            <div class="edu-item">
+                <div class="edu-title">國立金門大學</div>
+                <div class="edu-sub">大學部 | 當前就讀中</div>
+            </div>
+            <div class="edu-item">
+                <div class="edu-title">台北市立南港高中</div>
+                <div class="edu-sub">高中畢業</div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-laptop-code"></i> 專業技能與證照</h2>
+            <div class="tag-container">
+                <span class="tag">電腦資訊專長</span>
+                <span class="tag">電腦軟體應用丙級</span>
+                <span class="tag">硬體組裝與升級</span>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-language"></i> 語言能力</h2>
+            <div class="grid-list">
+                <div><strong>國文：</strong> 精通 (聽、說、讀、寫)</div>
+                <div><strong>英文：</strong> 具備 (聽、讀、寫)能力</div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-heart"></i> 個人興趣</h2>
+            <div class="tag-container">
+                <span class="tag"><i class="fas fa-music"></i> 音樂</span>
+                <span class="tag"><i class="fas fa-gamepad"></i> 電腦遊戲</span>
+                <span class="tag"><i class="fas fa-puzzle-piece"></i> 遊戲模組研究</span>
+            </div>
+        </section>
+        
+        <section>
+            <h2><i class="fas fa-briefcase"></i> 工作經歷</h2>
+            <p style="color: #94a3b8;">目前專注於學業與專案研發，尚無正式工作經歷。</p>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>
