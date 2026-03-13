@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>全方位 HTML Input 樣式展示</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background: #f4f4f4; }
+        form { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="tel"], input[type="url"], select, textarea {
+            width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
 
+    <form>
+        <h2>使用者體驗問卷調查</h2>
+
+        <div class="form-group">
+            <label>姓名 (text):</label>
+            <input type="text" placeholder="請輸入姓名">
+        </div>
+
+        <div class="form-group">
+            <label>電子郵件 (email):</label>
+            <input type="email" placeholder="example@mail.com">
+        </div>
+
+        <div class="form-group">
+            <label>密碼 (password):</label>
+            <input type="password" placeholder="請輸入密碼">
+        </div>
+
+        <div class="form-group">
+            <label>性別 (radio - 單選):</label>
+            <input type="radio" name="gender" value="m"> 男
+            <input type="radio" name="gender" value="f"> 女
+        </div>
+
+        <div class="form-group">
+            <label>興趣 (checkbox - 多選):</label>
+            <input type="checkbox"> 閱讀 
+            <input type="checkbox"> 運動 
+            <input type="checkbox"> 程式開發
+        </div>
+
+        <div class="form-group">
+            <label>年齡 (number):</label>
+            <input type="number" min="0" max="100" value="25">
+        </div>
+
+        <div class="form-group">
+            <label>滿意度評分 (range):</label>
+            <input type="range" min="1" max="10">
+        </div>
+
+        <div class="form-group">
+            <label>出生日期 (date):</label>
+            <input type="date">
+        </div>
+
+        <div class="form-group">
+            <label>最喜歡的顏色 (color):</label>
+            <input type="color" value="#4A90E2">
+        </div>
+
+        <div class="form-group">
+            <label>上傳大頭照 (file):</label>
+            <input type="file">
+        </div>
+
+        <div class="form-group">
+            <label>個人網站 (url):</label>
+            <input type="url" placeholder="https://example.com">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="送出問卷">
+            <input type="reset" value="重設">
+        </div>
+    </form>
+
+</body>
+</html>
