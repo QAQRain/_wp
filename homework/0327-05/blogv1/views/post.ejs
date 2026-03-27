@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    .content { line-height: 1.6; white-space: pre-wrap; }
+    .date { color: #888; }
+    .btn { display: inline-block; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1><%= post.title %></h1>
+  <p class="date"><%= new Date(post.created_at).toLocaleString('zh-TW') %></p>
+  <div class="content"><%= post.content %></div>
+  <a href="/" class="btn">返回</a>
+</body>
+</html>

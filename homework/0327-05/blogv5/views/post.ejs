@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="content-page">
+    <a href="/" class="btn btn-secondary" style="margin-bottom: 20px;">← 返回</a>
+    <h1><%= post.title %></h1>
+    <p class="meta">
+      <% if (post.author_name) { %>
+        作者: <a href="/user/<%= post.author_id %>" style="color: #4ecca3;"><%= post.author_name %></a> | 
+      <% } %>
+      <%= new Date(post.created_at).toLocaleString('zh-TW') %>
+    </p>
+    <p class="likes">❤️ <%= post.like_count || 0 %> 個推薦</p>
+    <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+    <div class="content"><%- post.content %></div>
+    <div style="margin-top: 30px;">
+      <% if (user) { %>
+        <form action="/like/<%= post.id %>" method="POST" style="display:inline;">
+          <button type="submit" class="btn <% if (hasLiked) { %>liked<% } else { %><% } %>">
+            <% if (hasLiked) { %>已推薦❤️<% } else { %>推薦❤️<% } %>
+          </button>
+        </form>
+      <% } %>
+      <% if (isOwner) { %>
+        <a href="/edit/<%= post.id %>" class="btn btn-edit">編輯</a>
+        <form action="/delete/<%= post.id %>" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-delete" onclick="return confirm('確定刪除？')">刪除</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

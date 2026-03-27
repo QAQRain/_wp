@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新增文章</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="editor-page">
+    <a href="/" class="btn btn-secondary" style="margin-bottom: 20px;">← 返回</a>
+    <h1>新增文章</h1>
+    <form action="/posts" method="POST" onsubmit="document.getElementById('content').value = document.getElementById('editor').innerHTML;">
+      <label>標題</label>
+      <input type="text" name="title" required>
+      <label>內容</label>
+      <div class="toolbar">
+        <button type="button" onclick="format('h1')" title="大標題">H1</button>
+        <button type="button" onclick="format('h2')" title="中標題">H2</button>
+        <button type="button" onclick="format('h3')" title="小標題">H3</button>
+        <div class="separator"></div>
+        <button type="button" onclick="format('b')" title="粗體"><b>B</b></button>
+        <button type="button" onclick="format('i')" title="斜體"><i>I</i></button>
+        <button type="button" onclick="format('u')" title="底線"><u>U</u></button>
+        <div class="separator"></div>
+        <button type="button" onclick="format('p')" title="段落">¶</button>
+        <button type="button" onclick="format('blockquote')" title="引用">❝</button>
+        <button type="button" onclick="format('ul')" title="列表">☰</button>
+        <div class="separator"></div>
+        <button type="button" onclick="document.getElementById('fileInput').click()" title="上傳圖片">📷</button>
+        <input type="file" id="fileInput" class="file-input" accept="image/*" onchange="uploadImage(this)">
+        <input type="text" id="imgUrl" placeholder="圖片網址">
+        <button type="button" onclick="insertImgUrl()" title="插入網址圖片">🔗</button>
+      </div>
+      <div id="editor" contenteditable="true"></div>
+      <input type="hidden" name="content" id="content">
+      <button type="submit">發布</button>
+      <a href="/" class="btn btn-secondary" style="margin-left: 10px;">取消</a>
+    </form>
+  </div>
+  <script>
+    function format(tag) {
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+      const range = selection.getRangeAt(0);
+      const wrapper = document.createElement(tag);
+      try {
+        range.surroundContents(wrapper);
+      } catch (e) {
+        alert('請先選取文字');
+      }
+    }
+    function uploadImage(input) {
+      if (!input.files || !input.files[0]) return;
+      const formData = new FormData();
+      formData.append('image', input.files[0]);
+      fetch('/upload', { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('editor').innerHTML += '<img src="' + data.url + '" style="max-width:100%;">';
+          }
+        });
+      input.value = '';
+    }
+    function insertImgUrl() {
+      const url = document.getElementById('imgUrl').value;
+      if (url) {
+        document.getElementById('editor').innerHTML += '<img src="' + url + '" style="max-width:100%;">';
+        document.getElementById('imgUrl').value = '';
+      }
+    }
+  </script>
+</body>
+</html>

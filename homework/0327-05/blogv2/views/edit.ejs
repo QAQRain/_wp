@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>編輯文章</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; }
+    textarea { height: 300px; }
+    button { margin-top: 15px; padding: 10px 20px; background: #0066cc; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .btn-back { background: #666; text-decoration: none; color: white; padding: 10px 20px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>編輯文章</h1>
+  <form action="/edit/<%= post.id %>" method="POST">
+    <label>標題</label>
+    <input type="text" name="title" value="<%= post.title %>" required>
+    <label>內容</label>
+    <textarea name="content" required><%= post.content %></textarea>
+    <button type="submit">儲存</button>
+    <a href="/post/<%= post.id %>" class="btn-back">取消</a>
+  </form>
+</body>
+</html>

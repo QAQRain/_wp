@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    .meta { color: #888; margin-bottom: 20px; }
+    .content { line-height: 1.6; }
+    .content h1, .content h2, .content h3 { color: #333; margin-top: 20px; }
+    .content img { max-width: 100%; height: auto; border-radius: 5px; margin: 10px 0; }
+    .content strong { font-weight: bold; }
+    .content em { font-style: italic; }
+    .content p { margin: 10px 0; }
+    .content ul, .content ol { margin: 10px 0; padding-left: 20px; }
+    .content li { margin: 5px 0; }
+    .content blockquote { border-left: 3px solid #ddd; padding-left: 10px; color: #666; margin: 10px 0; }
+    .content code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+    .content pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    .btn { display: inline-block; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px; }
+    .btn-delete { background: #cc0000; }
+    .btn-edit { background: #ff9900; }
+    .btn-like { background: #e74c3c; }
+    .btn-like.liked { background: #c0392b; }
+    .likes { margin: 15px 0; font-size: 1.1em; color: #e74c3c; }
+  </style>
+</head>
+<body>
+  <h1><%= post.title %></h1>
+  <p class="meta">
+    <% if (post.author_name) { %>作者: <%= post.author_name %> | <% } %>
+    <%= new Date(post.created_at).toLocaleString('zh-TW') %>
+  </p>
+  <div class="likes">❤️ <%= post.like_count || 0 %> 個推薦</div>
+  <div class="content"><%- post.content %></div>
+  <div style="margin-top: 20px;">
+    <a href="/" class="btn">返回</a>
+    <% if (user) { %>
+      <form action="/like/<%= post.id %>" method="POST" style="display:inline;">
+        <button type="submit" class="btn <% if (hasLiked) { %>liked<% } else { %>btn-like<% } %>">
+          <% if (hasLiked) { %>已推薦❤️<% } else { %>推薦❤️<% } %>
+        </button>
+      </form>
+    <% } %>
+    <% if (isOwner) { %>
+      <a href="/edit/<%= post.id %>" class="btn btn-edit">編輯</a>
+      <form action="/delete/<%= post.id %>" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-delete" onclick="return confirm('確定刪除？')">刪除</button>
+      </form>
+    <% } %>
+  </div>
+</body>
+</html>

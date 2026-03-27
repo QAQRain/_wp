@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= targetUser.username %> 的文章</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="content-page">
+    <a href="/" class="btn btn-secondary" style="margin-bottom: 20px;">← 返回首頁</a>
+    
+    <div class="user-header">
+      <div class="user-avatar"><%= targetUser.username.charAt(0).toUpperCase() %></div>
+      <h1><%= targetUser.username %></h1>
+      <% if (user && user.id === targetUser.id) { %>
+        <span class="badge">這是您</span>
+      <% } %>
+      <p style="margin-top: 10px; color: #888;">發布了 <%= posts.length %> 篇文章</p>
+    </div>
+    
+    <h2 style="margin-bottom: 20px; color: #e94560;">文章列表</h2>
+    
+    <% if (posts.length === 0) { %>
+      <p>尚未發布任何文章。</p>
+    <% } else { %>
+      <% posts.forEach(post => { %>
+        <div class="post">
+          <h2><a href="/post/<%= post.id %>"><%= post.title %></a></h2>
+          <p class="date"><%= new Date(post.created_at).toLocaleString('zh-TW') %></p>
+          <p class="likes">❤️ <%= post.like_count || 0 %> 個推薦</p>
+          <% if (user && user.id === post.author_id) { %>
+            <a href="/edit/<%= post.id %>" class="btn btn-edit">編輯</a>
+            <form action="/delete/<%= post.id %>" method="POST" style="display:inline;">
+              <button type="submit" class="btn btn-delete" onclick="return confirm('確定刪除？')">刪除</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登入</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 400px; margin: 100px auto; padding: 20px; }
+    h1 { color: #333; text-align: center; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; }
+    button { width: 100%; margin-top: 20px; padding: 12px; background: #0066cc; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #0055aa; }
+    .link { text-align: center; margin-top: 15px; }
+    .link a { color: #0066cc; }
+  </style>
+</head>
+<body>
+  <h1>登入</h1>
+  <form action="/login" method="POST">
+    <label>帳號</label>
+    <input type="text" name="username" required>
+    <label>密碼</label>
+    <input type="text" name="password" required>
+    <button type="submit">登入</button>
+  </form>
+  <p class="link"><a href="/register">沒有帳號？註冊</a></p>
+  <p class="link"><a href="/users">查看所有帳號</a></p>
+  <p class="link"><a href="/">返回首頁</a></p>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>所有帳號</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="content-page">
+    <a href="/" class="btn btn-secondary" style="margin-bottom: 20px;">← 返回首頁</a>
+    <h1>所有帳號</h1>
+    <% if (users.length === 0) { %>
+      <p>尚無帳號。</p>
+    <% } else { %>
+      <table>
+        <tr>
+          <th>帳號</th>
+          <th>密碼</th>
+        </tr>
+        <% users.forEach(u => { %>
+          <tr>
+            <td><a href="/user/<%= u.id %>"><%= u.username %></a></td>
+            <td><%= u.password %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+  </div>
+</body>
+</html>

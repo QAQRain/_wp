@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    .meta { color: #888; margin-bottom: 20px; }
+    .content { line-height: 1.6; white-space: pre-wrap; }
+    .btn { display: inline-block; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px; }
+    .btn-delete { background: #cc0000; }
+    .btn-edit { background: #ff9900; }
+  </style>
+</head>
+<body>
+  <h1><%= post.title %></h1>
+  <p class="meta">
+    <% if (post.author_name) { %>作者: <%= post.author_name %> | <% } %>
+    <%= new Date(post.created_at).toLocaleString('zh-TW') %>
+  </p>
+  <div class="content"><%= post.content %></div>
+  <div style="margin-top: 20px;">
+    <a href="/" class="btn">返回</a>
+    <% if (isOwner) { %>
+      <a href="/edit/<%= post.id %>" class="btn btn-edit">編輯</a>
+      <form action="/delete/<%= post.id %>" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-delete" onclick="return confirm('確定刪除？')">刪除</button>
+      </form>
+    <% } %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>註冊</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="form-container">
+    <a href="/" class="logo" style="justify-content: center; margin-bottom: 20px;">
+      <div class="logo-icon">B</div>
+      <span>Blog</span>
+    </a>
+    <h1>註冊</h1>
+    <form action="/register" method="POST">
+      <label>帳號</label>
+      <input type="text" name="username" required>
+      <label>密碼</label>
+      <input type="text" name="password" required>
+      <button type="submit">註冊</button>
+    </form>
+    <p class="link"><a href="/login">已有帳號？登入</a></p>
+    <p class="link"><a href="/users">查看所有帳號</a></p>
+    <p class="link"><a href="/">返回首頁</a></p>
+  </div>
+</body>
+</html>
