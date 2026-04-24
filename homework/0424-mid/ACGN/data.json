@@ -1,0 +1,41 @@
+{
+  "users": [
+    {
+      "id": 1776997955129,
+      "username": "Q",
+      "password": "$2a$10$Vg1xfCu5RJMPCmL280wu3.u5NEd9Vbrj4eUgdXibV3BBYuT4VSYLW",
+      "email": "",
+      "createdAt": "2026-04-24T02:32:35.129Z"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1776997975806,
+      "title": "qwad",
+      "content": "assssaaassd",
+      "boardId": 1,
+      "authorId": 1776997955129,
+      "createdAt": "2026-04-24T02:32:55.806Z",
+      "likes": 1,
+      "views": 2
+    }
+  ],
+  "comments": [],
+  "boards": [
+    {
+      "id": 1,
+      "name": "動漫討論",
+      "description": "動畫、漫畫相關討論"
+    },
+    {
+      "id": 2,
+      "name": "遊戲討論",
+      "description": "遊戲相關議題"
+    },
+    {
+      "id": 3,
+      "name": "生活綜合",
+      "description": "生活大小事"
+    }
+  ]
+}

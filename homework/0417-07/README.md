@@ -1,4 +1,4 @@
-### 習題6
+### 習題7
 AI問答 Gemini -- https://gemini.google.com/share/20f10866e3df
 
 ## 我的測試結果(1~10題)

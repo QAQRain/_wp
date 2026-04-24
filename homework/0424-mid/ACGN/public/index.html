@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動漫討論社群 - ACGN Forum</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft JhengHei", Arial, sans-serif; background: #1a1a2e; color: #eee; }
+        .header { background: linear-gradient(135deg, #e94560 0%, #16213e 100%); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .logo { font-size: 24px; font-weight: bold; color: #fff; text-decoration: none; }
+        .logo span { color: #e94560; }
+        .nav { display: flex; gap: 20px; }
+        .nav a { color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: 0.3s; }
+        .nav a:hover { background: rgba(255,255,255,0.1); }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .btn { padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; transition: 0.3s; }
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-primary:hover { background: #ff6b6b; }
+        .btn-secondary { background: #16213e; color: #fff; border: 1px solid #e94560; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .board-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .board-card { background: #16213e; border-radius: 10px; padding: 20px; cursor: pointer; transition: 0.3s; border-left: 4px solid #e94560; }
+        .board-card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(233,69,96,0.3); }
+        .board-card h3 { color: #e94560; margin-bottom: 10px; }
+        .board-card p { color: #aaa; font-size: 14px; }
+        .posts-list { display: flex; flex-direction: column; gap: 15px; }
+        .post-item { background: #16213e; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .post-info h3 { color: #fff; margin-bottom: 8px; cursor: pointer; }
+        .post-info h3:hover { color: #e94560; }
+        .post-meta { font-size: 12px; color: #888; }
+        .post-stats { text-align: right; }
+        .post-stats span { display: block; color: #aaa; font-size: 14px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: #16213e; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; }
+        .modal-content h2 { color: #e94560; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #aaa; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; background: #1a1a2e; border: 1px solid #333; border-radius: 5px; color: #fff; }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+        .post-detail { background: #16213e; border-radius: 10px; padding: 30px; }
+        .post-detail h1 { color: #e94560; margin-bottom: 15px; }
+        .post-detail .meta { color: #888; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333; }
+        .post-detail .content { line-height: 1.8; margin-bottom: 30px; white-space: pre-wrap; }
+        .post-actions { display: flex; gap: 15px; margin-bottom: 30px; }
+        .post-actions button { display: flex; align-items: center; gap: 5px; }
+        .comments-section { margin-top: 30px; }
+        .comments-section h3 { color: #e94560; margin-bottom: 15px; }
+        .comment { background: #1a1a2e; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .comment .author { color: #e94560; font-weight: bold; margin-bottom: 5px; }
+        .comment .time { color: #666; font-size: 12px; }
+        .comment-form { display: flex; gap: 10px; margin-top: 20px; }
+        .comment-form input { flex: 1; padding: 10px; background: #1a1a2e; border: 1px solid #333; border-radius: 5px; color: #fff; }
+        .back-link { color: #e94560; text-decoration: none; margin-bottom: 20px; display: inline-block; }
+        .back-link:hover { text-decoration: underline; }
+        .empty-state { text-align: center; padding: 50px; color: #888; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo" onclick="showHome()">ACGN<span>討論區</span></a>
+        <nav class="nav">
+            <a href="#" onclick="showHome()">首頁</a>
+            <a href="#" onclick="showBoards()">討論板</a>
+        </nav>
+        <div class="user-info" id="userInfo">
+            <button class="btn btn-secondary" onclick="showLoginModal()">登入</button>
+            <button class="btn btn-primary" onclick="showRegisterModal()">註冊</button>
+        </div>
+    </header>
+
+    <div class="container" id="app"></div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h2>登入</h2>
+            <div class="form-group">
+                <label>帳號</label>
+                <input type="text" id="loginUsername" placeholder="請輸入帳號">
+            </div>
+            <div class="form-group">
+                <label>密碼</label>
+                <input type="password" id="loginPassword" placeholder="請輸入密碼">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal('loginModal')">取消</button>
+                <button class="btn btn-primary" onclick="login()">登入</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <h2>註冊</h2>
+            <div class="form-group">
+                <label>帳號</label>
+                <input type="text" id="regUsername" placeholder="請輸入帳號">
+            </div>
+            <div class="form-group">
+                <label>密碼</label>
+                <input type="password" id="regPassword" placeholder="請輸入密碼">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="regEmail" placeholder="請輸入 Email">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal('registerModal')">取消</button>
+                <button class="btn btn-primary" onclick="register()">註冊</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <h2>發表文章</h2>
+            <div class="form-group">
+                <label>選擇討論板</label>
+                <select id="postBoard"></select>
+            </div>
+            <div class="form-group">
+                <label>標題</label>
+                <input type="text" id="postTitle" placeholder="請輸入標題">
+            </div>
+            <div class="form-group">
+                <label>內容</label>
+                <textarea id="postContent" placeholder="請輸入文章內容"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal('postModal')">取消</button>
+                <button class="btn btn-primary" onclick="createPost()">發表</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentPage = 'home';
+        let currentBoardId = null;
+
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                fetch('/api/user', { headers: { Authorization: `Bearer ${token}` } })
+                    .then(r => r.ok ? r.json() : Promise.reject())
+                    .then(user => {
+                        currentUser = user;
+                        updateUserUI();
+                    })
+                    .catch(() => localStorage.removeItem('token'));
+            }
+        }
+
+        function updateUserUI() {
+            const userInfo = document.getElementById('userInfo');
+            if (currentUser) {
+                userInfo.innerHTML = `
+                    <span>歡迎，${currentUser.username}</span>
+                    <button class="btn btn-secondary" onclick="logout()">登出</button>
+                `;
+            } else {
+                userInfo.innerHTML = `
+                    <button class="btn btn-secondary" onclick="showLoginModal()">登入</button>
+                    <button class="btn btn-primary" onclick="showRegisterModal()">註冊</button>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            currentUser = null;
+            updateUserUI();
+            showHome();
+        }
+
+        function showLoginModal() { document.getElementById('loginModal').classList.add('active'); }
+        function showRegisterModal() { document.getElementById('registerModal').classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        async function register() {
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            const email = document.getElementById('regEmail').value;
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, email })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('註冊成功，請登入');
+                closeModal('registerModal');
+            } else {
+                alert(data.error);
+            }
+        }
+
+        async function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem('token', data.token);
+                currentUser = data.user;
+                updateUserUI();
+                closeModal('loginModal');
+                showHome();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        async function showHome() {
+            currentPage = 'home';
+            const res = await fetch('/api/posts');
+            const posts = await res.json();
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                    <h2 style="color:#e94560;">最新文章</h2>
+                    ${currentUser ? `<button class="btn btn-primary" onclick="showPostModal()">發表文章</button>` : ''}
+                </div>
+                <div class="posts-list">
+                    ${posts.length ? posts.map(p => `
+                        <div class="post-item">
+                            <div class="post-info">
+                                <h3 onclick="viewPost(${p.id})">${p.title}</h3>
+                                <div class="post-meta">
+                                    看板：${p.boardName || '未分類'} | 作者：${p.author || '匿名'} | ${new Date(p.createdAt).toLocaleString()}
+                                </div>
+                            </div>
+                            <div class="post-stats">
+                                <span>❤️ ${p.likes || 0}</span>
+                                <span>👁 ${p.views || 0}</span>
+                            </div>
+                        </div>
+                    `).join('') : '<div class="empty-state">尚無文章</div>'}
+                </div>
+            `;
+        }
+
+        async function showBoards() {
+            currentPage = 'boards';
+            const res = await fetch('/api/boards');
+            const boards = await res.json();
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <h2 style="color:#e94560;margin-bottom:20px;">討論板</h2>
+                <div class="board-list">
+                    ${boards.map(b => `
+                        <div class="board-card" onclick="viewBoard(${b.id})">
+                            <h3>${b.name}</h3>
+                            <p>${b.description}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        async function viewBoard(boardId) {
+            currentPage = 'board';
+            currentBoardId = boardId;
+            const res = await fetch(`/api/boards/${boardId}/posts`);
+            const posts = await res.json();
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <a href="#" class="back-link" onclick="showBoards()">← 返回討論板</a>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0;">
+                    <h2 style="color:#e94560;">文章列表</h2>
+                    ${currentUser ? `<button class="btn btn-primary" onclick="showPostModal()">發表文章</button>` : ''}
+                </div>
+                <div class="posts-list">
+                    ${posts.length ? posts.map(p => `
+                        <div class="post-item">
+                            <div class="post-info">
+                                <h3 onclick="viewPost(${p.id})">${p.title}</h3>
+                                <div class="post-meta">
+                                    作者：${p.author || '匿名'} | ${new Date(p.createdAt).toLocaleString()}
+                                </div>
+                            </div>
+                            <div class="post-stats">
+                                <span>❤️ ${p.likes || 0}</span>
+                                <span>👁 ${p.views || 0}</span>
+                            </div>
+                        </div>
+                    `).join('') : '<div class="empty-state">此看板尚無文章</div>'}
+                </div>
+            `;
+        }
+
+        async function viewPost(postId) {
+            await fetch(`/api/posts/${postId}/view`, { method: 'POST' });
+            const res = await fetch(`/api/posts/${postId}`);
+            const post = await res.json();
+            const app = document.getElementById('app');
+            const backPage = currentPage === 'board' ? `viewBoard(${currentBoardId})` : 'showHome()';
+            app.innerHTML = `
+                <a href="#" class="back-link" onclick="${backPage}">← 返回</a>
+                <div class="post-detail">
+                    <h1>${post.title}</h1>
+                    <div class="meta">
+                        作者：${post.author || '匿名'} | 發表時間：${new Date(post.createdAt).toLocaleString()}
+                    </div>
+                    <div class="content">${post.content}</div>
+                    <div class="post-actions">
+                        <button class="btn btn-primary" onclick="likePost(${post.id})">
+                            ❤️ 按讚 (${post.likes || 0})
+                        </button>
+                    </div>
+                    <div class="comments-section">
+                        <h3>留言 (${post.comments?.length || 0})</h3>
+                        ${post.comments?.map(c => `
+                            <div class="comment">
+                                <div class="author">${c.author} <span class="time">${new Date(c.createdAt).toLocaleString()}</span></div>
+                                <div>${c.content}</div>
+                            </div>
+                        `).join('') || ''}
+                        ${currentUser ? `
+                            <div class="comment-form">
+                                <input type="text" id="commentInput" placeholder="寫下你的留言..." onkeypress="if(event.key==='Enter')addComment(${post.id})">
+                                <button class="btn btn-primary" onclick="addComment(${post.id})">發表</button>
+                            </div>
+                        ` : '<p style="color:#888;margin-top:20px;">登入後可發表留言</p>'}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function likePost(postId) {
+            const token = localStorage.getItem('token');
+            if (!token) return alert('請先登入');
+            const res = await fetch(`/api/posts/${postId}/like`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (res.ok) viewPost(postId);
+        }
+
+        async function addComment(postId) {
+            const token = localStorage.getItem('token');
+            const content = document.getElementById('commentInput').value;
+            if (!content) return;
+            const res = await fetch(`/api/posts/${postId}/comments`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ content })
+            });
+            if (res.ok) viewPost(postId);
+        }
+
+        async function showPostModal() {
+            const res = await fetch('/api/boards');
+            const boards = await res.json();
+            const select = document.getElementById('postBoard');
+            select.innerHTML = boards.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
+            document.getElementById('postModal').classList.add('active');
+        }
+
+        async function createPost() {
+            const token = localStorage.getItem('token');
+            const boardId = document.getElementById('postBoard').value;
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            if (!title || !content) return alert('請填寫標題和內容');
+            const res = await fetch('/api/posts', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ boardId, title, content })
+            });
+            if (res.ok) {
+                closeModal('postModal');
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+                showHome();
+            }
+        }
+
+        checkAuth();
+        showHome();
+    </script>
+</body>
+</html>
