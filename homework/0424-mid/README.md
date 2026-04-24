@@ -214,7 +214,7 @@ app.post('/api/posts', auth, (req, res) => {
 #### 樣式設計
 - 使用 CSS Grid 排列看板卡片
 - 深色主題配色（#1a1a2e, #16213e）
-- 紅色強調色（#e94560）自己獨特風格
+- 紅色強調色（#e94560）營造獨特風格
 
 #### 前端邏輯
 ```javascript
@@ -240,7 +240,7 @@ async function login() {
 ---
 
 ## 7. 截圖
-
+- 主頁面
 [![ying-mu-xie-qu-hua-mian-2026-04-24-110540.png](https://i.postimg.cc/Pq8L0P2v/ying-mu-xie-qu-hua-mian-2026-04-24-110540.png)](https://postimg.cc/QBhxTxLj)
 
 ---
@@ -270,6 +270,22 @@ async function login() {
 - [JWT 介紹](https://jwt.io/)
 - [bcryptjs 文件](https://www.npmjs.com/package/bcryptjs)
 - [網站原型-巴哈姆特](https://www.gamer.com.tw/)
+
+---
+
+## 10.執行方式
+- 以cmd啟動 將目錄導向至ACGN資料夾內
+```
+npm install
+```
+```
+node server.js
+```
+- 從瀏覽器開啟網址 
+```
+http://localhost:3000
+```
+---
 
 **指導老師**：陳鍾誠 老師
 **學生**： 陳冠倫
