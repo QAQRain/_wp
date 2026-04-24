@@ -264,12 +264,12 @@ async function login() {
 
 ---
 
-## 10. 參考資源
+## 9. 參考資源
 
 - [Express 官方文檔](https://expressjs.com/)
 - [JWT 介紹](https://jwt.io/)
 - [bcryptjs 文件](https://www.npmjs.com/package/bcryptjs)
-- [網站原型](https://www.gamer.com.tw/)
+- [網站原型-巴哈姆特](https://www.gamer.com.tw/)
 
 **指導老師**：陳鍾誠 老師
 **學生**： 陳冠倫
