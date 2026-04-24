@@ -240,7 +240,8 @@ async function login() {
 ---
 
 ## 7. 截圖
-![image](https://i.postimg.cc/mr6RswpQ/ying-mu-xie-qu-hua-mian-2026-04-24-110540.png)](https://postimg.cc/67RFVdX3)
+
+[![ying-mu-xie-qu-hua-mian-2026-04-24-110540.png](https://i.postimg.cc/mr6RswpQ/ying-mu-xie-qu-hua-mian-2026-04-24-110540.png)](https://postimg.cc/67RFVdX3)
 
 ---
 
