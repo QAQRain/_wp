@@ -241,7 +241,7 @@ async function login() {
 
 ## 7. 截圖
 
-![ying-mu-xie-qu-hua-mian-2026-04-24-110540.png](https://i.postimg.cc/mr6RswpQ/ying-mu-xie-qu-hua-mian-2026-04-24-110540.png)
+[![ying-mu-xie-qu-hua-mian-2026-04-24-110540.png](https://i.postimg.cc/Pq8L0P2v/ying-mu-xie-qu-hua-mian-2026-04-24-110540.png)](https://postimg.cc/QBhxTxLj)
 
 ---
 
