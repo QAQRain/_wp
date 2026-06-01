@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Design 平時作業總彙整</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+  background: #0f0f1a;
+  color: #e0e0e0;
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 260px;
+  background: #1a1a2e;
+  padding: 30px 0;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  border-right: 1px solid #2a2a4a;
+}
+.sidebar h1 {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0 20px 20px;
+  color: #e94560;
+  border-bottom: 1px solid #2a2a4a;
+  margin-bottom: 15px;
+}
+.sidebar nav a {
+  display: block;
+  padding: 12px 25px;
+  color: #a0a0c0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all .2s;
+  border-left: 3px solid transparent;
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: #16213e;
+  color: #fff;
+  border-left-color: #e94560;
+}
+.main {
+  margin-left: 260px;
+  flex: 1;
+  padding: 40px 50px;
+  max-width: 1200px;
+}
+.section {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 35px;
+  margin-bottom: 40px;
+  border: 1px solid #2a2a4a;
+}
+.section h2 {
+  color: #e94560;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+.section .date {
+  color: #8888aa;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+.section .desc {
+  color: #c0c0d0;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.section .skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.skill-tag {
+  background: #16213e;
+  color: #88aaff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: 1px solid #2a3a6e;
+}
+.code-block {
+  background: #0d0d1a;
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  border: 1px solid #2a2a4a;
+  margin-bottom: 15px;
+  position: relative;
+}
+.code-block .file-label {
+  position: absolute;
+  top: 0; right: 0;
+  background: #2a2a4a;
+  color: #8888aa;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  border-radius: 0 8px 0 8px;
+}
+.code-block pre { margin: 0; }
+.code-block code { color: #c0c0d0; }
+.code-block .kw { color: #c792ea; }
+.code-block .str { color: #c3e88d; }
+.code-block .cm { color: #546e7a; }
+.code-block .num { color: #f78c6c; }
+.code-block .fn { color: #82aaff; }
+.code-block .built { color: #ffcb6b; }
+.code-block .prop { color: #f07178; }
+.result-block {
+  background: #0d2818;
+  border: 1px solid #1a4a2e;
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #a0e0a0;
+  margin-bottom: 20px;
+}
+.result-block::before {
+  content: '▸ 執行結果';
+  display: block;
+  font-size: 0.75rem;
+  color: #6aaa6a;
+  margin-bottom: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+.sub-section {
+  margin: 25px 0;
+  padding: 20px;
+  background: #14142a;
+  border-radius: 8px;
+  border: 1px solid #2a2a4a;
+}
+.sub-section h4 {
+  color: #88aaff;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.meta-item {
+  background: #14142a;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #2a2a4a;
+}
+.meta-item .label {
+  color: #8888aa;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.meta-item .value {
+  color: #e0e0f0;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+.btn {
+  display: inline-block;
+  padding: 8px 20px;
+  background: #e94560;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: background .2s;
+}
+.btn:hover { background: #d63850; }
+.btn-outline {
+  background: transparent;
+  border: 1px solid #e94560;
+  color: #e94560;
+}
+.btn-outline:hover { background: #e94560; color: #fff; }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+ul, ol { padding-left: 20px; line-height: 1.8; color: #c0c0d0; }
+li { margin-bottom: 4px; }
+.feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.feature-item {
+  background: #14142a;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 3px solid #e94560;
+}
+.feature-item strong { color: #e0e0f0; display: block; margin-bottom: 4px; }
+.feature-item span { color: #a0a0c0; font-size: 0.85rem; }
+@media (max-width: 768px) {
+  .sidebar { width: 200px; }
+  .main { margin-left: 200px; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <h1>Web Design<br>平時作業總彙整</h1>
+  <nav>
+    <a href="#hw1">01 · 個人履歷</a>
+    <a href="#hw2">02 · 表單輸入展示</a>
+    <a href="#hw3">03 · JS 入門 Hello</a>
+    <a href="#hw4">04 · JS 基礎練習 10 題</a>
+    <a href="#hw5">05 · 網誌系統 blog</a>
+    <a href="#hw6">06 · JS 進階練習 10 題</a>
+    <a href="#hw7">07 · JS 實作練習 10 題</a>
+    <a href="#hw8">08 · ACGN 討論區</a>
+  </nav>
+</aside>
+
+<div class="main">
+
+<div style="text-align:center;padding:40px 0 20px">
+  <h1 style="font-size:2.2rem;color:#e94560;margin-bottom:10px">Web Design 平時作業總彙整</h1>
+  <p style="color:#8888aa">國立金門大學 · 陳冠倫 · 指導老師：陳鍾誠</p>
+  <p style="color:#666688;font-size:0.85rem">將八次平時作業匯總整理，包含原始碼與說明</p>
+</div>
+
+<!-- ===== HW1 ===== -->
+<div class="section" id="hw1">
+  <h2>作業一 · 個人履歷</h2>
+  <div class="date">2026-03-06 · 0306-01</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">aboutme.html</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">HTML + CSS</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">個人履歷/自我介紹</div></div>
+  </div>
+  <div class="desc">
+    以 HTML + CSS 製作的個人履歷頁面，採用左右雙欄設計（sidebar + main），包含個人基本資料、學歷、專業技能與證照、語言能力、興趣、工作經歷等資訊。使用 Font Awesome 圖示庫，整體風格簡潔專業。
+  </div>
+  <div class="sub-section">
+    <h4>學習重點</h4>
+    <ul>
+      <li>HTML 結構化語意標籤（aside、main、section）</li>
+      <li>CSS Grid / Flexbox 排版</li>
+      <li>CSS 變數（:root）與統一主題色</li>
+      <li>響應式設計（RWD）</li>
+      <li>Font Awesome 圖示整合</li>
+    </ul>
+  </div>
+  <details>
+    <summary style="cursor:pointer;color:#88aaff;font-weight:600;margin-bottom:10px">查看原始碼</summary>
+    <div class="code-block">
+      <span class="file-label">aboutme.html</span>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-Hant"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;陳冠倫 Rain - 個人履歷&lt;/title&gt;
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+    &lt;style&gt;
+        :root { --primary: #2563eb; --dark: #1e293b; --light: #f8fafc; --text: #334155; }
+        body { font-family: 'Segoe UI','Microsoft JhengHei',sans-serif; background: var(--light); color: var(--text); padding: 20px; }
+        .resume-card { max-width: 850px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 300px 1fr; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .sidebar { background: var(--dark); color: white; padding: 40px 30px; }
+        .profile-img { width: 150px; height: 150px; background: #475569; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; border: 4px solid var(--primary); }
+        .main-content { padding: 40px; }
+        h2 { color: var(--dark); border-bottom: 2px solid var(--primary); padding-bottom: 8px; }
+        .tag { background: #e2e8f0; color: #475569; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; }
+        @media (max-width: 768px) { .resume-card { grid-template-columns: 1fr; } }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="resume-card"&gt;
+    &lt;aside class="sidebar"&gt;
+        &lt;div class="profile-img"&gt;&lt;i class="fas fa-user-ninja"&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;h1&gt;陳冠倫&lt;/h1&gt;
+        &lt;span class="english-name"&gt;Guan-Lun Chen (Rain)&lt;/span&gt;
+        &lt;div class="info-item"&gt;&lt;i class="fas fa-calendar"&gt;&lt;/i&gt; 2005/12/12&lt;/div&gt;
+        &lt;div class="info-item"&gt;&lt;i class="fas fa-phone"&gt;&lt;/i&gt; 0906-512-308&lt;/div&gt;
+        &lt;div class="info-item"&gt;&lt;i class="fas fa-map-marker-alt"&gt;&lt;/i&gt; 新北市汐止區&lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;main class="main-content"&gt;
+        &lt;section&gt;&lt;h2&gt;學歷資料&lt;/h2&gt;
+            &lt;p&gt;國立金門大學 大學部 | 當前就讀中&lt;/p&gt;
+            &lt;p&gt;台北市立南港高中 畢業&lt;/p&gt;
+        &lt;/section&gt;
+        &lt;section&gt;&lt;h2&gt;專業技能與證照&lt;/h2&gt;
+            &lt;span class="tag"&gt;電腦資訊專長&lt;/span&gt;
+            &lt;span class="tag"&gt;電腦軟體應用丙級&lt;/span&gt;
+            &lt;span class="tag"&gt;硬體組裝與升級&lt;/span&gt;
+        &lt;/section&gt;
+        &lt;section&gt;&lt;h2&gt;語言能力&lt;/h2&gt;
+            &lt;p&gt;國文：精通 | 英文：具備聽讀寫能力&lt;/p&gt;
+        &lt;/section&gt;
+        &lt;section&gt;&lt;h2&gt;個人興趣&lt;/h2&gt;
+            &lt;span class="tag"&gt;音樂&lt;/span&gt;
+            &lt;span class="tag"&gt;電腦遊戲&lt;/span&gt;
+            &lt;span class="tag"&gt;遊戲模組研究&lt;/span&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+&lt;/div&gt;
+&lt;/body&gt;&lt;/html&gt;</code></pre>
+    </div>
+  </details>
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/blob/master/homework/0306-01/aboutme.html" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW2 ===== -->
+<div class="section" id="hw2">
+  <h2>作業二 · 表單輸入類型展示</h2>
+  <div class="date">2026-03-13 · 0313-02</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">formofshowinputtype.html</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">HTML Forms</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">各種 Input 類型展示</div></div>
+  </div>
+  <div class="desc">
+    以「使用者體驗問卷調查」為主題，展示 HTML 表單中多種 input 類型：text、email、password、radio、checkbox、number、range、date、color、file、url，以及 submit/reset 按鈕。頁面整潔，適合做為表單入門教學範例。
+  </div>
+  <div class="sub-section">
+    <h4>學習重點</h4>
+    <ul>
+      <li>&lt;input&gt; 各類型及其應用場景</li>
+      <li>radio（單選）與 checkbox（多選）</li>
+      <li>range 滑桿、color 選色器、date 日期選擇器</li>
+      <li>form 表單結構與提交/重設按鈕</li>
+    </ul>
+  </div>
+  <details>
+    <summary style="cursor:pointer;color:#88aaff;font-weight:600;margin-bottom:10px">查看原始碼</summary>
+    <div class="code-block">
+      <span class="file-label">formofshowinputtype.html</span>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-Hant"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;全方位 HTML Input 樣式展示&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        form { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], input[type="email"], input[type="password"],
+        input[type="number"], input[type="tel"], input[type="url"],
+        select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form&gt;
+        &lt;h2&gt;使用者體驗問卷調查&lt;/h2&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;姓名 (text):&lt;/label&gt;
+            &lt;input type="text" placeholder="請輸入姓名"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;電子郵件 (email):&lt;/label&gt;
+            &lt;input type="email" placeholder="example@mail.com"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;密碼 (password):&lt;/label&gt;
+            &lt;input type="password" placeholder="請輸入密碼"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;性別 (radio):&lt;/label&gt;
+            &lt;input type="radio" name="gender" value="m"&gt; 男
+            &lt;input type="radio" name="gender" value="f"&gt; 女
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;興趣 (checkbox):&lt;/label&gt;
+            &lt;input type="checkbox"&gt; 閱讀
+            &lt;input type="checkbox"&gt; 運動
+            &lt;input type="checkbox"&gt; 程式開發
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;年齡 (number):&lt;/label&gt;
+            &lt;input type="number" min="0" max="100" value="25"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;滿意度評分 (range):&lt;/label&gt;
+            &lt;input type="range" min="1" max="10"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;出生日期 (date):&lt;/label&gt;
+            &lt;input type="date"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;最喜歡的顏色 (color):&lt;/label&gt;
+            &lt;input type="color" value="#4A90E2"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;上傳大頭照 (file):&lt;/label&gt;
+            &lt;input type="file"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;個人網站 (url):&lt;/label&gt;
+            &lt;input type="url" placeholder="https://example.com"&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;input type="submit" value="送出問卷"&gt;
+            &lt;input type="reset" value="重設"&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/body&gt;&lt;/html&gt;</code></pre>
+    </div>
+  </details>
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/blob/master/homework/0313-02/formofshowinputtype.html" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW3 ===== -->
+<div class="section" id="hw3">
+  <h2>作業三 · JavaScript 入門 Hello</h2>
+  <div class="date">2026-03-20 · 0320-03</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">hello.js</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">Node.js / JavaScript</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">JS 入門第一支程式</div></div>
+  </div>
+  <div class="desc">
+    最基礎的 JavaScript 程式——在終端機輸出 "Hello 你好"。作為 Node.js 環境的第一支程式，確認開發環境能正常執行 JS 程式碼。
+  </div>
+  <div class="sub-section">
+    <h4>學習重點</h4>
+    <ul>
+      <li>Node.js 執行環境設定</li>
+      <li>console.log() 基本輸出</li>
+      <li>終端機執行 node 指令</li>
+    </ul>
+  </div>
+  <div class="code-block">
+    <span class="file-label">hello.js</span>
+    <pre><code><span class="kw">console.log</span>(<span class="str">'Hello 你好'</span>)</code></pre>
+  </div>
+  <div class="result-block">Hello 你好</div>
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/blob/master/homework/0320-03/hello.js" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW4 ===== -->
+<div class="section" id="hw4">
+  <h2>作業四 · JavaScript 基礎練習 10 題</h2>
+  <div class="date">2026-03-20 · 0320-04</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">01.js ~ 10.js</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">JavaScript 基礎語法</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">變數、函式、物件、JSON</div></div>
+  </div>
+  <div class="desc">
+    10 題 JavaScript 基礎練習，涵蓋 if 判斷式、for/while 迴圈、function 函式、object 物件、JSON 轉換、陣列操作等核心語法，是 JS 程式設計的完整入門訓練。
+  </div>
+  <div class="skills">
+    <span class="skill-tag">if/else</span>
+    <span class="skill-tag">for 迴圈</span>
+    <span class="skill-tag">while 迴圈</span>
+    <span class="skill-tag">function</span>
+    <span class="skill-tag">object</span>
+    <span class="skill-tag">JSON</span>
+    <span class="skill-tag">array</span>
+    <span class="skill-tag">Math</span>
+  </div>
+
+  <div class="sub-section">
+    <h4>01 · 偶數探測器 (if, for)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">findEvens</span>(numbers) {
+  <span class="kw">let</span> evens = [];
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; numbers.length; i++) {
+    <span class="kw">if</span> (numbers[i] % <span class="num">2</span> === <span class="num">0</span>) {
+      evens.push(numbers[i]);
+    }
+  }
+  <span class="kw">return</span> evens;
+}
+console.log(findEvens([10, 15, 20, 25, 30]));</code></pre></div>
+    <div class="result-block">[ 10, 20, 30 ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>02 · 倒數計時器 (while)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">countdown</span>(n) {
+  <span class="kw">let</span> output = [];
+  <span class="kw">while</span> (n &gt;= <span class="num">0</span>) {
+    output.push(n);
+    n--;
+  }
+  <span class="kw">return</span> output.join(<span class="str">", "</span>) + <span class="str">" ... Liftoff!"</span>;
+}
+console.log(countdown(<span class="num">5</span>));</code></pre></div>
+    <div class="result-block">5, 4, 3, 2, 1, 0 ... Liftoff!</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>03 · BMI 計算機 (function, if)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">calculateBMI</span>(weight, height) {
+  <span class="kw">let</span> bmi = weight / (height * height);
+  <span class="kw">let</span> category;
+  <span class="kw">if</span> (bmi &lt; <span class="num">18.5</span>) category = <span class="str">"體重過輕"</span>;
+  <span class="kw">else</span> <span class="kw">if</span> (bmi &lt; <span class="num">24</span>) category = <span class="str">"正常範圍"</span>;
+  <span class="kw">else</span> category = <span class="str">"過重"</span>;
+  <span class="kw">return</span> <span class="str">`BMI: ${bmi.toFixed(1)} (${category})`</span>;
+}
+console.log(calculateBMI(<span class="num">65</span>, <span class="num">1.7</span>));</code></pre></div>
+    <div class="result-block">BMI: 22.5 (正常範圍)</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>04 · 個人檔案產生器 (object, function)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> user = {
+  firstName: <span class="str">"Alex"</span>,
+  lastName: <span class="str">"Chen"</span>,
+  <span class="fn">getFullName</span>() {
+    <span class="kw">return</span> <span class="built">this</span>.firstName + <span class="str">" "</span> + <span class="built">this</span>.lastName;
+  }
+};
+console.log(user.getFullName());</code></pre></div>
+    <div class="result-block">Alex Chen</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>05 · 購物清單總計 (array, object, for)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">getTotal</span>(cart) {
+  <span class="kw">let</span> total = <span class="num">0</span>;
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; cart.length; i++) {
+    total += cart[i].price;
+  }
+  <span class="kw">return</span> total;
+}
+<span class="kw">const</span> myCart = [{name: <span class="str">"奶茶"</span>, price: <span class="num">60</span>}, {name: <span class="str">"雞排"</span>, price: <span class="num">90</span>}];
+console.log(<span class="str">"總金額:"</span>, getTotal(myCart));</code></pre></div>
+    <div class="result-block">總金額: 150</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>06 · JSON 轉換練習 (JSON, object)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> profile = { name: <span class="str">"Gemini"</span>, hobbies: [<span class="str">"AI"</span>, <span class="str">"Coding"</span>], age: <span class="num">1</span> };
+<span class="kw">const</span> jsonStr = <span class="built">JSON</span>.stringify(profile);
+console.log(<span class="str">"JSON 字串:"</span>, jsonStr);
+<span class="kw">const</span> originalObj = <span class="built">JSON</span>.parse(jsonStr);
+console.log(<span class="str">"還原物件姓名:"</span>, originalObj.name);</code></pre></div>
+    <div class="result-block">JSON 字串: {"name":"Gemini","hobbies":["AI","Coding"],"age":1}<br>還原物件姓名: Gemini</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>07 · 成績管理系統 (array, object, for, if)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">filterScores</span>(students) {
+  <span class="kw">let</span> topStudents = [];
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; students.length; i++) {
+    <span class="kw">if</span> (students[i].score &gt;= <span class="num">80</span>) {
+      topStudents.push(students[i].name);
+    }
+  }
+  <span class="kw">return</span> topStudents;
+}
+<span class="kw">const</span> classA = [{name: <span class="str">"小明"</span>, score: <span class="num">85</span>}, {name: <span class="str">"小華"</span>, score: <span class="num">70</span>}, {name: <span class="str">"小紅"</span>, score: <span class="num">92</span>}];
+console.log(<span class="str">"優秀學生:"</span>, filterScores(classA));</code></pre></div>
+    <div class="result-block">優秀學生: [ '小明', '小紅' ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>08 · 數字反轉 (while, function)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">reverseNumber</span>(num) {
+  <span class="kw">let</span> reversed = <span class="num">0</span>;
+  <span class="kw">while</span> (num &gt; <span class="num">0</span>) {
+    <span class="kw">let</span> digit = num % <span class="num">10</span>;
+    reversed = (reversed * <span class="num">10</span>) + digit;
+    num = <span class="built">Math</span>.floor(num / <span class="num">10</span>);
+  }
+  <span class="kw">return</span> reversed;
+}
+console.log(reverseNumber(<span class="num">9876</span>));</code></pre></div>
+    <div class="result-block">6789</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>09 · 聯絡人搜尋器 (JSON, array, for, if)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> rawData = <span class="str">'[{"name": "Alice", "tel": "0911"}, {"name": "Bob", "tel": "0922"}]'</span>;
+<span class="kw">function</span> <span class="fn">searchPhone</span>(searchName) {
+  <span class="kw">const</span> data = <span class="built">JSON</span>.parse(rawData);
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; data.length; i++) {
+    <span class="kw">if</span> (data[i].name === searchName) <span class="kw">return</span> data[i].tel;
+  }
+  <span class="kw">return</span> <span class="str">"找不到此人"</span>;
+}
+console.log(<span class="str">"Alice 的電話:"</span>, searchPhone(<span class="str">"Alice"</span>));
+console.log(<span class="str">"Eve 的電話:"</span>, searchPhone(<span class="str">"Eve"</span>));</code></pre></div>
+    <div class="result-block">Alice 的電話: 0911<br>Eve 的電話: 找不到此人</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>10 · 庫存檢查 (object, function)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> store = { <span class="str">"筆電"</span>: <span class="num">5</span>, <span class="str">"滑鼠"</span>: <span class="num">0</span> };
+<span class="kw">function</span> <span class="fn">checkOrder</span>(item, qty) {
+  <span class="kw">if</span> (store[item] === <span class="kw">undefined</span>) <span class="kw">return</span> <span class="str">"商品不存在"</span>;
+  <span class="kw">if</span> (store[item] &gt;= qty) <span class="kw">return</span> <span class="str">"下單成功"</span>;
+  <span class="kw">return</span> <span class="str">"庫存不足"</span>;
+}
+console.log(checkOrder(<span class="str">"筆電"</span>, <span class="num">3</span>));
+console.log(checkOrder(<span class="str">"滑鼠"</span>, <span class="num">1</span>));</code></pre></div>
+    <div class="result-block">下單成功<br>庫存不足</div>
+  </div>
+
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/tree/master/homework/0320-04" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW5 ===== -->
+<div class="section" id="hw5">
+  <h2>作業五 · 網誌系統 (Blog)</h2>
+  <div class="date">2026-03-27 · 0327-05</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">blogv1 ~ blogv5</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">Node.js + Express + SQLite + EJS</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">全端網誌系統</div></div>
+  </div>
+  <div class="desc">
+    從零開始逐步開發的完整網誌系統，歷經 5 個版本的迭代演進。從最基礎的 CRUD 文章系統，逐步加入帳號註冊/登入、排版工具（H1~H3、粗體、斜體、清單、引用）、圖片插入、按讚推薦系統、暗色系主題、使用者個人頁面等功能。
+  </div>
+  <div class="sub-section">
+    <h4>版本演進</h4>
+    <div class="feature-list">
+      <div class="feature-item"><strong>blogv1</strong><span>基礎文章 CRUD，Node.js + SQLite</span></div>
+      <div class="feature-item"><strong>blogv2</strong><span>帳號系統（註冊/登入）、編輯權限</span></div>
+      <div class="feature-item"><strong>blogv3</strong><span>排版工具列、按讚推薦系統、右側固定推薦欄</span></div>
+      <div class="feature-item"><strong>blogv4</strong><span>圖示工具列、本地上傳圖片 (multer)</span></div>
+      <div class="feature-item"><strong>blogv5</strong><span>暗色系主題、使用者頁面、網站 Logo</span></div>
+    </div>
+  </div>
+  <div class="sub-section">
+    <h4>功能總覽</h4>
+    <ul>
+      <li>文章管理：發布、編輯、刪除自己的文章</li>
+      <li>帳號系統：註冊、登入、登出</li>
+      <li>排版工具：H1/H2/H3、粗體/斜體/底線、段落/引用/列表</li>
+      <li>圖片插入：網址連結 + 本地上傳 (multer)</li>
+      <li>按讚推薦：每人每篇文章按一次/取消，右側熱門排行（sticky）</li>
+      <li>暗色系主題：深藍紫漸變背景</li>
+      <li>使用者頁面：點擊作者查看該使用者所有文章</li>
+      <li>網站圖標：左上角 Blog Logo，點擊回首頁</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <h4>技術棧</h4>
+    <div class="skills">
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Express</span>
+      <span class="skill-tag">SQLite (sql.js)</span>
+      <span class="skill-tag">EJS 模板</span>
+      <span class="skill-tag">Multer</span>
+      <span class="skill-tag">express-session</span>
+      <span class="skill-tag">CSS 暗色系</span>
+    </div>
+  </div>
+  <details>
+    <summary style="cursor:pointer;color:#88aaff;font-weight:600;margin-bottom:10px">查看 server.js 原始碼 (blogv5 最終版)</summary>
+    <div class="code-block">
+      <span class="file-label">blogv5/server.js</span>
+      <pre><code><span class="kw">const</span> express = <span class="kw">require</span>(<span class="str">'express'</span>);
+<span class="kw">const</span> session = <span class="kw">require</span>(<span class="str">'express-session'</span>);
+<span class="kw">const</span> initSqlJs = <span class="kw">require</span>(<span class="str">'sql.js'</span>);
+<span class="kw">const</span> fs = <span class="kw">require</span>(<span class="str">'fs'</span>);
+<span class="kw">const</span> path = <span class="kw">require</span>(<span class="str">'path'</span>);
+<span class="kw">const</span> multer = <span class="kw">require</span>(<span class="str">'multer'</span>);
+
+<span class="kw">const</span> app = express();
+<span class="kw">const</span> PORT = <span class="num">3000</span>;
+<span class="kw">let</span> db;
+
+app.use(express.urlencoded({ extended: <span class="kw">true</span> }));
+app.use(express.json());
+app.use(session({ secret: <span class="str">'blog-secret'</span>, resave: <span class="kw">false</span>, saveUninitialized: <span class="kw">true</span> }));
+app.use(<span class="str">'/uploads'</span>, express.static(path.join(__dirname, <span class="str">'public/uploads'</span>)));
+
+<span class="kw">const</span> storage = multer.diskStorage({
+  destination: <span class="str">'./public/uploads/'</span>,
+  filename: (req, file, cb) =&gt; cb(<span class="kw">null</span>, <span class="built">Date</span>.now() + path.extname(file.originalname))
+});
+<span class="kw">const</span> upload = multer({ storage });
+
+<span class="kw">async function</span> <span class="fn">initDB</span>() {
+  <span class="kw">const</span> SQL = <span class="kw">await</span> initSqlJs();
+  <span class="kw">const</span> dbFile = path.join(__dirname, <span class="str">'blog.db'</span>);
+  <span class="kw">if</span> (fs.existsSync(dbFile)) {
+    db = <span class="kw">new</span> SQL.Database(fs.readFileSync(dbFile));
+  } <span class="kw">else</span> {
+    db = <span class="kw">new</span> SQL.Database();
+  }
+  db.run(<span class="str">`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE, password TEXT
+  )`</span>);
+  db.run(<span class="str">`CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT, content TEXT, author_id INTEGER,
+    created_at TEXT DEFAULT (datetime('now','localtime'))
+  )`</span>);
+  db.run(<span class="str">`CREATE TABLE IF NOT EXISTS likes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER, post_id INTEGER,
+    UNIQUE(user_id, post_id)
+  )`</span>);
+  <span class="fn">saveDB</span>();
+}
+
+<span class="kw">function</span> <span class="fn">saveDB</span>() {
+  <span class="kw">const</span> data = db.export();
+  <span class="kw">const</span> buffer = Buffer.from(data);
+  fs.writeFileSync(path.join(__dirname, <span class="str">'blog.db'</span>), buffer);
+}
+
+<span class="cm">// ... routes for login, register, posts, likes, etc.</span>
+app.listen(PORT, () =&gt; console.log(<span class="str">`Server running on http://localhost:${PORT}`</span>));</code></pre>
+    </div>
+  </details>
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/tree/master/homework/0327-05" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW6 ===== -->
+<div class="section" id="hw6">
+  <h2>作業六 · JavaScript 進階練習 10 題</h2>
+  <div class="date">2026-04-17 · 0417-06</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">01.js ~ 10.js</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">JavaScript 進階語法</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">閉包、展開、解構、map/filter</div></div>
+  </div>
+  <div class="desc">
+    10 題 JavaScript 進階練習，涵蓋閉包（closure）與封裝、展開運算子（spread operator）、陣列 filter/map、解構賦值（destructuring）、其餘參數（rest parameters）、findIndex、Promise（async/await）、三元運算子、預設參數等主題。
+  </div>
+  <div class="skills">
+    <span class="skill-tag">閉包</span>
+    <span class="skill-tag">展開運算子</span>
+    <span class="skill-tag">filter/map</span>
+    <span class="skill-tag">解構賦值</span>
+    <span class="skill-tag">rest 參數</span>
+    <span class="skill-tag">findIndex</span>
+    <span class="skill-tag">Promise/async</span>
+    <span class="skill-tag">三元運算子</span>
+  </div>
+
+  <div class="sub-section">
+    <h4>01 · 閉包與封裝 (closure)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">createCounter</span>() {
+  <span class="kw">let</span> count = <span class="num">0</span>;
+  <span class="kw">return</span> <span class="kw">function</span>() {
+    count += <span class="num">5</span>;
+    <span class="kw">return</span> count;
+  };
+}
+<span class="kw">const</span> counter = <span class="fn">createCounter</span>();
+console.log(counter());
+console.log(counter());
+console.log(counter());</code></pre></div>
+    <div class="result-block">5<br>10<br>15</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>02 · 私有變數封裝 (closure)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">secretCounter</span>() {
+  <span class="kw">let</span> count = <span class="num">100</span>;
+  <span class="kw">return</span> {
+    increment: () =&gt; count++,
+    getCount: () =&gt; count
+  };
+}
+<span class="kw">const</span> myCounter = <span class="fn">secretCounter</span>();
+myCounter.increment();
+console.log(<span class="str">"Count is:"</span>, myCounter.getCount());
+console.log(<span class="str">"外部無法存取 count，驗證成功！"</span>);</code></pre></div>
+    <div class="result-block">Count is: 100<br>外部無法存取 count，驗證成功！</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>03 · 展開與 map (spread + map)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> prices = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>];
+<span class="kw">const</span> taxRates = [<span class="num">0.08</span>, <span class="num">0.1</span>, <span class="num">0.2</span>];
+<span class="kw">const</span> totalPrices = prices.<span class="fn">map</span>(p =&gt; {
+  <span class="kw">const</span> rates = [...taxRates];
+  <span class="kw">return</span> rates.<span class="fn">reduce</span>((acc, r) =&gt; acc + p * r, p);
+});
+console.log(totalPrices);</code></pre></div>
+    <div class="result-block">[ 12.8, 25.6, 38.4, 51.2 ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>04 · 展開運算子 (spread operator)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> arr1 = [<span class="num">1</span>, <span class="num">2</span>];
+<span class="kw">const</span> arr2 = [...arr1, <span class="num">3</span>, <span class="num">4</span>];
+<span class="kw">const</span> result = [<span class="str">'Start'</span>, ...arr2];
+console.log(result);</code></pre></div>
+    <div class="result-block">[ 'Start', 1, 2, 3, 4 ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>05 · 其餘參數 (rest parameters)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">showNames</span>(a, b, ...rest) {
+  console.log(a);
+  console.log(b);
+}
+<span class="fn">showNames</span>(<span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>, <span class="num">60</span>);</code></pre></div>
+    <div class="result-block">20<br>30</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>06 · filter 篩選</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> numbers = [<span class="num">2</span>, <span class="num">4</span>, <span class="num">8</span>, <span class="num">12</span>];
+<span class="kw">const</span> result = numbers.<span class="fn">filter</span>(n =&gt; n &gt; <span class="num">5</span>);
+console.log(result);</code></pre></div>
+    <div class="result-block">[ 8, 12 ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>07 · 解構賦值 (destructuring)</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> people = [
+  { name: <span class="str">'Alice'</span>, age: <span class="num">25</span> },
+  { name: <span class="str">'Bob'</span>, age: <span class="num">17</span> }
+];
+<span class="kw">const</span> adults = people.<span class="fn">filter</span>(({ age }) =&gt; age &gt;= <span class="num">18</span>);
+console.log(adults);</code></pre></div>
+    <div class="result-block">[ { name: 'Alice', age: 25 } ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>08 · findIndex</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> arr = [[<span class="num">1</span>, <span class="num">2</span>, <span class="num">99</span>], [<span class="num">3</span>, <span class="num">4</span>]];
+<span class="kw">const</span> [first, second] = arr;
+console.log(first);
+console.log(second);</code></pre></div>
+    <div class="result-block">[ 1, 2, 99 ]<br>[ 3, 4 ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>09 · Promise 與 async/await</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">delay</span>(ms) {
+  <span class="kw">return</span> <span class="kw">new</span> <span class="built">Promise</span>(resolve =&gt; setTimeout(resolve, ms));
+}
+<span class="kw">async function</span> <span class="fn">run</span>() {
+  <span class="kw">await</span> <span class="fn">delay</span>(<span class="num">100</span>);
+  console.log(<span class="str">"Task Completed"</span>);
+}
+<span class="fn">run</span>();</code></pre></div>
+    <div class="result-block">Task Completed</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>10 · 綜合應用（三元、預設參數、箭頭函式）</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">calcPrice</span>(price, tax = <span class="num">0.1</span>) {
+  <span class="kw">return</span> price * (<span class="num">1</span> + tax);
+}
+<span class="kw">const</span> items = [<span class="num">100</span>, <span class="num">200</span>, <span class="num">300</span>];
+<span class="kw">const</span> total = items.<span class="fn">map</span>(p =&gt; <span class="fn">calcPrice</span>(p)).<span class="fn">reduce</span>((a, b) =&gt; a + b);
+console.log(<span class="str">"最終總價為:"</span>, total);</code></pre></div>
+    <div class="result-block">最終總價為: 660</div>
+  </div>
+
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/tree/master/homework/0417-06" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW7 ===== -->
+<div class="section" id="hw7">
+  <h2>作業七 · JavaScript 實作練習 10 題</h2>
+  <div class="date">2026-04-17 · 0417-07</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">檔案</div><div class="value">01.js ~ 10.js</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">JavaScript DOM / 實用技巧</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">模板字串、map/join、三元、錯誤處理</div></div>
+  </div>
+  <div class="desc">
+    10 題 JavaScript 實作練習，著重於 DOM 操作、模板字串（template literals）、map/join 組合、物件點符號/中括號存取、三元運算子、字串截斷、錯誤處理（try/catch）等實用技巧。
+  </div>
+  <div class="skills">
+    <span class="skill-tag">DOM 操作</span>
+    <span class="skill-tag">模板字串</span>
+    <span class="skill-tag">map/join</span>
+    <span class="skill-tag">三元運算子</span>
+    <span class="skill-tag">try/catch</span>
+    <span class="skill-tag">物件存取</span>
+    <span class="skill-tag">字串操作</span>
+  </div>
+
+  <div class="sub-section">
+    <h4>01 · 物件存取（點符號 vs 中括號）</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> obj = { message: <span class="str">"Hello World"</span> };
+console.log(<span class="str">"使用點符號:"</span>, obj.message);
+console.log(<span class="str">"使用中括號:"</span>, obj[<span class="str">"message"</span>]);</code></pre></div>
+    <div class="result-block">使用點符號: Hello World<br>使用中括號: Hello World</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>02 · DOM 模板字串</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> title = <span class="str">"JS教學"</span>;
+<span class="kw">const</span> content = <span class="str">"內容在此"</span>;
+<span class="kw">const</span> html = <span class="str">`&lt;h1&gt;${title}&lt;/h1&gt;&lt;p&gt;${content}&lt;/p&gt;`</span>;
+console.log(html);</code></pre></div>
+    <div class="result-block">&lt;h1&gt;JS教學&lt;/h1&gt;&lt;p&gt;內容在此&lt;/p&gt;</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>03 · map + join 組合 HTML</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> items = [<span class="str">'A'</span>, <span class="str">'B'</span>];
+<span class="kw">const</span> html = items.<span class="fn">map</span>(item =&gt; <span class="str">`&lt;div&gt;${item}&lt;/div&gt;`</span>).<span class="fn">join</span>(<span class="str">''</span>);
+console.log(html);</code></pre></div>
+    <div class="result-block">&lt;div&gt;A&lt;/div&gt;&lt;div&gt;B&lt;/div&gt;</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>04 · 物件解構與應用</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> article = { id: <span class="num">99</span>, title: <span class="str">"JS"</span> };
+<span class="kw">const</span> { id } = article;
+console.log({ id });
+console.log(<span class="str">`目前查看的文章 ID 為: ${id}`</span>);</code></pre></div>
+    <div class="result-block">{ id: 99 }<br>目前查看的文章 ID 為: 99</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>05 · Promise 鍊與資料處理</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">fetchData</span>() {
+  <span class="kw">return</span> <span class="built">Promise</span>.resolve({ id: <span class="num">101</span>, status: <span class="str">'success'</span> });
+}
+<span class="fn">fetchData</span>().<span class="fn">then</span>(data =&gt; {
+  console.log(<span class="str">"成功取得資料："</span>, data);
+});</code></pre></div>
+    <div class="result-block">成功取得資料： { id: 101, status: 'success' }</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>06 · 陣列索引存取</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> tags = [<span class="str">'js'</span>, <span class="str">'node'</span>, <span class="str">'react'</span>];
+console.log(<span class="str">"tags 陣列中的第二個元素:"</span>, tags[<span class="num">1</span>]);</code></pre></div>
+    <div class="result-block">tags 陣列中的第二個元素: node</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>07 · 物件屬性存取</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> post = { title: <span class="str">"掌握 JavaScript 函數"</span>, author: <span class="str">"Alice"</span> };
+console.log(<span class="str">"抓到的文章標題是："</span>, post.title);</code></pre></div>
+    <div class="result-block">抓到的文章標題是： 掌握 JavaScript 函數</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>08 · 三元運算子</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> isLoggedIn = <span class="kw">false</span>;
+console.log(<span class="str">`&lt;h1&gt;Welcome, ${isLoggedIn ? <span class="str">"Alice"</span> : <span class="str">"Guest"</span>}&lt;/h1&gt;`</span>);
+console.log(<span class="str">`&lt;h1&gt;Welcome, ${isLoggedIn || <span class="str">"Stranger"</span>}&lt;/h1&gt;`</span>);</code></pre></div>
+    <div class="result-block">&lt;h1&gt;Welcome, Guest&lt;/h1&gt;<br>&lt;h1&gt;Welcome, Stranger&lt;/h1&gt;</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>09 · 字串截斷</h4>
+    <div class="code-block"><pre><code><span class="kw">const</span> truncate = (str, max = <span class="num">10</span>) =&gt;
+  str.length &gt; max ? str.slice(<span class="num">0</span>, max) + <span class="str">'...'</span> : str;
+<span class="kw">const</span> titles = [<span class="str">"Very long title here"</span>, <span class="str">"Another Very Long Title"</span>, <span class="str">"3rd Very long title"</span>];
+console.log(titles.<span class="fn">map</span>(t =&gt; truncate(t)));</code></pre></div>
+    <div class="result-block">[ 'Very long ...', 'Another Ve...', '3rd Very l...' ]</div>
+  </div>
+
+  <div class="sub-section">
+    <h4>10 · 錯誤處理 (try/catch)</h4>
+    <div class="code-block"><pre><code><span class="kw">function</span> <span class="fn">checkAccess</span>(role) {
+  <span class="kw">if</span> (role !== <span class="str">'admin'</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="built">Error</span>(<span class="str">'Access Denied'</span>);
+  <span class="kw">return</span> <span class="str">'Welcome'</span>;
+}
+<span class="kw">try</span> { console.log(<span class="str">"錯誤處理："</span>, <span class="fn">checkAccess</span>(<span class="str">'user'</span>)); }
+<span class="kw">catch</span> (e) { console.log(<span class="str">"錯誤處理："</span>, e.message); }
+<span class="kw">try</span> { console.log(<span class="str">"成功訊息："</span>, <span class="fn">checkAccess</span>(<span class="str">'admin'</span>)); }
+<span class="kw">catch</span> (e) { console.log(e.message); }</code></pre></div>
+    <div class="result-block">錯誤處理： Access Denied<br>成功訊息： Welcome</div>
+  </div>
+
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/tree/master/homework/0417-07" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<!-- ===== HW8 ===== -->
+<div class="section" id="hw8">
+  <h2>作業八 · ACGN 討論區（期中專案）</h2>
+  <div class="date">2026-04-24 · 0424-mid</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">專案</div><div class="value">ACGN 討論區</div></div>
+    <div class="meta-item"><div class="label">技術</div><div class="value">Node.js + Express + JWT + bcrypt</div></div>
+    <div class="meta-item"><div class="label">主題</div><div class="value">類似巴哈姆特的社群討論區</div></div>
+  </div>
+  <div class="desc">
+    期中專案，以巴哈姆特為靈感製作的 ACGN（動畫、漫畫、遊戲、輕小說）討論區。採用 Node.js + Express 後端，JWT 進行身份驗證，bcrypt 加密密碼。具備討論版分類、文章發布、按讚、瀏覽次數、留言等功能。前端為原生 HTML + CSS + JavaScript，資料儲存使用 JSON 檔案。
+  </div>
+  <div class="sub-section">
+    <h4>核心功能</h4>
+    <div class="feature-list">
+      <div class="feature-item"><strong>帳號系統</strong><span>註冊/登入，JWT 認證，bcrypt 密碼加密</span></div>
+      <div class="feature-item"><strong>討論版分類</strong><span>動漫、遊戲、生活綜合三大看板</span></div>
+      <div class="feature-item"><strong>文章系統</strong><span>發布、瀏覽文章，含按讚與瀏覽次數</span></div>
+      <div class="feature-item"><strong>留言功能</strong><span>登入使用者可對文章留言</span></div>
+    </div>
+  </div>
+  <div class="sub-section">
+    <h4>技術棧</h4>
+    <div class="skills">
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Express</span>
+      <span class="skill-tag">JWT (jsonwebtoken)</span>
+      <span class="skill-tag">bcryptjs</span>
+      <span class="skill-tag">JSON 資料庫</span>
+      <span class="skill-tag">原生 JS 前端</span>
+      <span class="skill-tag">CSS 深色主題</span>
+    </div>
+  </div>
+
+  <details>
+    <summary style="cursor:pointer;color:#88aaff;font-weight:600;margin-bottom:10px">查看 server.js 主要架構</summary>
+    <div class="code-block">
+      <span class="file-label">ACGN/server.js</span>
+      <pre><code><span class="kw">const</span> express = <span class="kw">require</span>(<span class="str">'express'</span>);
+<span class="kw">const</span> cors = <span class="kw">require</span>(<span class="str">'cors'</span>);
+<span class="kw">const</span> bodyParser = <span class="kw">require</span>(<span class="str">'body-parser'</span>);
+<span class="kw">const</span> bcrypt = <span class="kw">require</span>(<span class="str">'bcryptjs'</span>);
+<span class="kw">const</span> jwt = <span class="kw">require</span>(<span class="str">'jsonwebtoken'</span>);
+<span class="kw">const</span> fs = <span class="kw">require</span>(<span class="str">'fs'</span>);
+<span class="kw">const</span> path = <span class="kw">require</span>(<span class="str">'path'</span>);
+
+<span class="kw">const</span> app = express();
+<span class="kw">const</span> JWT_SECRET = <span class="str">'acgn_secret_key'</span>;
+<span class="kw">const</span> DATA_FILE = path.join(__dirname, <span class="str">'data.json'</span>);
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, <span class="str">'public'</span>)));
+
+<span class="kw">function</span> <span class="fn">loadData</span>() {
+  <span class="kw">if</span> (!fs.existsSync(DATA_FILE)) {
+    <span class="kw">const</span> initData = { users: [], boards: [
+      { id: <span class="num">1</span>, name: <span class="str">"動漫討論"</span>, icon: <span class="str">"🎬"</span> },
+      { id: <span class="num">2</span>, name: <span class="str">"遊戲討論"</span>, icon: <span class="str">"🎮"</span> },
+      { id: <span class="num">3</span>, name: <span class="str">"生活綜合"</span>, icon: <span class="str">"💬"</span> }
+    ], posts: [] };
+    fs.writeFileSync(DATA_FILE, <span class="built">JSON</span>.stringify(initData));
+    <span class="kw">return</span> initData;
+  }
+  <span class="kw">return</span> <span class="built">JSON</span>.parse(fs.readFileSync(DATA_FILE));
+}
+
+<span class="kw">function</span> <span class="fn">saveData</span>(data) {
+  fs.writeFileSync(DATA_FILE, <span class="built">JSON</span>.stringify(data, <span class="kw">null</span>, <span class="num">2</span>));
+}
+
+<span class="cm">// JWT 驗證中介軟體</span>
+<span class="kw">const</span> auth = (req, res, next) =&gt; {
+  <span class="kw">const</span> token = req.headers.authorization?.split(<span class="str">' '</span>)[<span class="num">1</span>];
+  <span class="kw">if</span> (!token) <span class="kw">return</span> res.status(<span class="num">401</span>).json({ error: <span class="str">'請先登入'</span> });
+  <span class="kw">try</span> {
+    req.user = jwt.verify(token, JWT_SECRET);
+    next();
+  } <span class="kw">catch</span> (e) {
+    res.status(<span class="num">401</span>).json({ error: <span class="str">'token 無效'</span> });
+  }
+};
+
+<span class="cm">// API 路由</span>
+app.post(<span class="str">'/api/register'</span>, <span class="kw">async</span> (req, res) =&gt; { <span class="cm">/* 註冊 */</span> });
+app.post(<span class="str">'/api/login'</span>, <span class="kw">async</span> (req, res) =&gt; { <span class="cm">/* 登入 */</span> });
+app.get(<span class="str">'/api/boards'</span>, (req, res) =&gt; { <span class="cm">/* 取得看板 */</span> });
+app.get(<span class="str">'/api/posts'</span>, (req, res) =&gt; { <span class="cm">/* 取得文章 */</span> });
+app.post(<span class="str">'/api/posts'</span>, auth, (req, res) =&gt; { <span class="cm">/* 發文 */</span> });
+app.post(<span class="str">'/api/posts/:id/like'</span>, auth, (req, res) =&gt; { <span class="cm">/* 按讚 */</span> });
+app.post(<span class="str">'/api/posts/:id/comments'</span>, auth, (req, res) =&gt; { <span class="cm">/* 留言 */</span> });
+
+app.listen(<span class="num">3000</span>, () =&gt; console.log(<span class="str">'ACGN 討論區啟動在 http://localhost:3000'</span>));</code></pre>
+    </div>
+  </details>
+  <div class="btn-group">
+    <a class="btn btn-outline" href="https://github.com/QAQRain/_wp/tree/master/homework/0424-mid" target="_blank">GitHub 原始檔</a>
+  </div>
+</div>
+
+<div style="text-align:center;padding:40px 0;color:#666688;border-top:1px solid #2a2a4a;margin-top:20px">
+  <p>國立金門大學 ·  Web Design 課程 · 陳冠倫</p>
+  <p style="font-size:0.85rem;margin-top:5px">指導老師：陳鍾誠 老師 · 原始碼皆存放於 GitHub：QAQRain/_wp</p>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.sidebar nav a').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (window.scrollY >= top) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
